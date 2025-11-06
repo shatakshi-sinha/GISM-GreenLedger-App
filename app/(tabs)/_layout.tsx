@@ -1,20 +1,21 @@
 import { Tabs } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import { Colors } from '../../constants/Colors';
 
 export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: '#10b981',
-        tabBarInactiveTintColor: '#64748b',
+        tabBarActiveTintColor: Colors.primary,
+        tabBarInactiveTintColor: Colors.textTertiary,
         tabBarStyle: {
-          backgroundColor: '#ffffff',
-          borderTopColor: '#e2e8f0',
+          backgroundColor: Colors.surface,
+          borderTopColor: Colors.border,
         },
         headerStyle: {
-          backgroundColor: '#10b981',
+          backgroundColor: Colors.primary,
         },
-        headerTintColor: '#ffffff',
+        headerTintColor: Colors.textInverse,
         headerTitleStyle: {
           fontWeight: 'bold',
         },
@@ -43,24 +44,6 @@ export default function TabLayout() {
           title: 'Emissions',
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="cloud" size={size} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="reports"
-        options={{
-          title: 'Reports',
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="document-text" size={size} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="strategies"
-        options={{
-          title: 'Strategies',
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="leaf" size={size} color={color} />
           ),
         }}
       />
