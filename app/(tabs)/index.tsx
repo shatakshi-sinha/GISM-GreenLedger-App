@@ -61,6 +61,30 @@ export default function Dashboard() {
     }]
   };
 
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'Excellent': return '#10b981';
+      case 'Good': return '#3b82f6';
+      case 'Fair': return '#f59e0b';
+      case 'Completed': return '#10b981';
+      case 'On Track': return '#10b981';
+      case 'At Risk': return '#ef4444';
+      default: return '#64748b';
+    }
+  };
+
+  const getStatusBackground = (status: string) => {
+    switch (status) {
+      case 'Excellent': return '#dcfce7';
+      case 'Good': return '#f0f9ff';
+      case 'Fair': return '#fefce8';
+      case 'Completed': return '#dcfce7';
+      case 'On Track': return '#dcfce7';
+      case 'At Risk': return '#fef2f2';
+      default: return '#f8fafc';
+    }
+  };
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.statsRow}>
@@ -154,13 +178,15 @@ export default function Dashboard() {
                 <Text style={styles.complianceName}>{score.standard}</Text>
                 <Chip 
                   mode="outlined"
-                  textStyle={{ fontSize: 12 }}
+                  textStyle={[
+                    styles.statusChipText,
+                    { color: getStatusColor(score.status) }
+                  ]}
                   style={[
                     styles.statusChip,
                     { 
-                      backgroundColor: 
-                        score.status === 'Excellent' ? '#dcfce7' :
-                        score.status === 'Good' ? '#f0f9ff' : '#fef2f2'
+                      backgroundColor: getStatusBackground(score.status),
+                      borderColor: getStatusColor(score.status)
                     }
                   ]}
                 >
@@ -169,10 +195,7 @@ export default function Dashboard() {
               </View>
               <ProgressBar 
                 progress={score.score / 100} 
-                color={
-                  score.status === 'Excellent' ? '#10b981' :
-                  score.status === 'Good' ? '#3b82f6' : '#f59e0b'
-                }
+                color={getStatusColor(score.status)}
                 style={styles.progressBar}
               />
               <Text style={styles.scoreText}>{score.score}/{score.maxScore}</Text>
@@ -191,13 +214,15 @@ export default function Dashboard() {
                 <Text style={styles.goalTitle}>{goal.title}</Text>
                 <Chip 
                   mode="outlined"
-                  textStyle={{ fontSize: 12 }}
+                  textStyle={[
+                    styles.statusChipText,
+                    { color: getStatusColor(goal.status) }
+                  ]}
                   style={[
                     styles.statusChip,
                     { 
-                      backgroundColor: 
-                        goal.status === 'On Track' ? '#dcfce7' :
-                        goal.status === 'Completed' ? '#dcfce7' : '#fef2f2'
+                      backgroundColor: getStatusBackground(goal.status),
+                      borderColor: getStatusColor(goal.status)
                     }
                   ]}
                 >
@@ -206,7 +231,7 @@ export default function Dashboard() {
               </View>
               <ProgressBar 
                 progress={goal.progress / 100} 
-                color={goal.status === 'At Risk' ? '#ef4444' : '#10b981'}
+                color={getStatusColor(goal.status)}
                 style={styles.progressBar}
               />
               <Text style={styles.progressText}>
@@ -286,9 +311,16 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#1e293b',
     flex: 1,
+    marginRight: 8,
   },
   statusChip: {
-    height: 24,
+    minHeight: 28,
+    paddingVertical: 2,
+  },
+  statusChipText: {
+    fontSize: 12,
+    fontWeight: '600',
+    lineHeight: 16,
   },
   scoreText: {
     fontSize: 12,
@@ -309,6 +341,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#1e293b',
     flex: 1,
+    marginRight: 8,
   },
   progressText: {
     fontSize: 12,

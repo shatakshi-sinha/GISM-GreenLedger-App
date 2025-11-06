@@ -21,6 +21,15 @@ export default function Goals() {
     }
   };
 
+  const getStatusBackground = (status: string) => {
+    switch (status) {
+      case 'On Track': return '#dcfce7';
+      case 'At Risk': return '#fef2f2';
+      case 'Completed': return '#f0f9ff';
+      default: return '#f8fafc';
+    }
+  };
+
   const getStatusIcon = (status: string) => {
     switch (status) {
       case 'On Track': return 'check-circle';
@@ -90,8 +99,17 @@ export default function Goals() {
               </View>
               <Chip 
                 mode="outlined"
-                style={[styles.statusChip, { borderColor: getStatusColor(goal.status) }]}
-                textStyle={{ color: getStatusColor(goal.status), fontSize: 12 }}
+                style={[
+                  styles.statusChip, 
+                  { 
+                    borderColor: getStatusColor(goal.status),
+                    backgroundColor: getStatusBackground(goal.status)
+                  }
+                ]}
+                textStyle={[
+                  styles.statusChipText,
+                  { color: getStatusColor(goal.status) }
+                ]}
               >
                 {goal.status}
               </Chip>
@@ -156,7 +174,12 @@ export default function Goals() {
         <Card.Content>
           <View style={styles.completedHeader}>
             <Title style={styles.completedTitle}>Completed Goals</Title>
-            <Chip mode="outlined" icon="check" style={styles.completedChip}>
+            <Chip 
+              mode="outlined" 
+              icon="check" 
+              style={styles.completedChip}
+              textStyle={styles.completedChipText}
+            >
               0 Goals
             </Chip>
           </View>
@@ -248,6 +271,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'flex-start',
     flex: 1,
+    marginRight: 12,
   },
   goalTextContainer: {
     flex: 1,
@@ -261,7 +285,13 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
   statusChip: {
-    height: 24,
+    minHeight: 28,
+    paddingVertical: 2,
+  },
+  statusChipText: {
+    fontSize: 12,
+    fontWeight: '600',
+    lineHeight: 16,
   },
   progressSection: {
     marginBottom: 16,
@@ -333,7 +363,16 @@ const styles = StyleSheet.create({
     color: '#64748b',
   },
   completedChip: {
-    height: 24,
+    minHeight: 28,
+    paddingVertical: 2,
+    borderColor: '#10b981',
+    backgroundColor: '#dcfce7',
+  },
+  completedChipText: {
+    fontSize: 12,
+    fontWeight: '600',
+    lineHeight: 16,
+    color: '#10b981',
   },
   completedText: {
     fontSize: 14,

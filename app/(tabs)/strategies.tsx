@@ -118,13 +118,21 @@ export default function Strategies() {
           <Card.Content>
             <View style={styles.strategyHeader}>
               <Title style={styles.strategyTitle}>{strategy.title}</Title>
-              <Chip 
-                mode="outlined"
-                textStyle={{ fontSize: 12, color: getStatusColor(strategy.status) }}
-                style={[styles.statusChip, { borderColor: getStatusColor(strategy.status) }]}
-              >
-                {strategy.status}
-              </Chip>
+              <View style={styles.statusContainer}>
+                <Chip 
+                  mode="outlined"
+                  textStyle={styles.statusChipText}
+                  style={[
+                    styles.statusChip, 
+                    { 
+                      borderColor: getStatusColor(strategy.status),
+                      backgroundColor: `${getStatusColor(strategy.status)}15` // Add slight background tint
+                    }
+                  ]}
+                >
+                  {strategy.status}
+                </Chip>
+              </View>
             </View>
 
             <Paragraph style={styles.strategyDescription}>
@@ -134,7 +142,12 @@ export default function Strategies() {
             <View style={styles.strategyMeta}>
               <View style={styles.metaItem}>
                 <Text style={styles.metaLabel}>Category</Text>
-                <Chip mode="outlined" compact style={styles.metaChip}>
+                <Chip 
+                  mode="outlined" 
+                  compact 
+                  style={styles.metaChip}
+                  textStyle={styles.metaChipText}
+                >
                   {strategy.category}
                 </Chip>
               </View>
@@ -144,8 +157,14 @@ export default function Strategies() {
                 <Chip 
                   mode="outlined" 
                   compact 
-                  style={[styles.metaChip, { borderColor: getImpactColor(strategy.impact) }]}
-                  textStyle={{ color: getImpactColor(strategy.impact) }}
+                  style={[
+                    styles.metaChip, 
+                    { borderColor: getImpactColor(strategy.impact) }
+                  ]}
+                  textStyle={[
+                    styles.metaChipText,
+                    { color: getImpactColor(strategy.impact) }
+                  ]}
                 >
                   {strategy.impact} Impact
                 </Chip>
@@ -156,8 +175,14 @@ export default function Strategies() {
                 <Chip 
                   mode="outlined" 
                   compact 
-                  style={[styles.metaChip, { borderColor: getDifficultyColor(strategy.difficulty) }]}
-                  textStyle={{ color: getDifficultyColor(strategy.difficulty) }}
+                  style={[
+                    styles.metaChip, 
+                    { borderColor: getDifficultyColor(strategy.difficulty) }
+                  ]}
+                  textStyle={[
+                    styles.metaChipText,
+                    { color: getDifficultyColor(strategy.difficulty) }
+                  ]}
                 >
                   {strategy.difficulty}
                 </Chip>
@@ -262,10 +287,19 @@ const styles = StyleSheet.create({
   strategyTitle: {
     fontSize: 16,
     flex: 1,
-    marginRight: 8,
+    marginRight: 12,
+  },
+  statusContainer: {
+    flexShrink: 0,
   },
   statusChip: {
-    height: 24,
+    minHeight: 32, // Increased minimum height
+    paddingVertical: 4, // Vertical padding
+  },
+  statusChipText: {
+    fontSize: 12,
+    fontWeight: '600',
+    lineHeight: 16, // Better line height for text
   },
   strategyDescription: {
     fontSize: 14,
@@ -288,7 +322,12 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   metaChip: {
-    height: 24,
+    minHeight: 28, // Consistent height for all meta chips
+    paddingHorizontal: 8,
+  },
+  metaChipText: {
+    fontSize: 11,
+    lineHeight: 14,
   },
   strategyDetails: {
     flexDirection: 'row',
